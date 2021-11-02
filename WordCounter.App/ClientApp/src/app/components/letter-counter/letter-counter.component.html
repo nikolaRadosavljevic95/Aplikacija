@@ -1,0 +1,54 @@
+<div class="customBlocker" *ngIf="progressSpinner">
+    <p-progressSpinner [style]="{position: 'absolute',top: '50%',left: '50%',transform: 'translate(-50%, -50%)' }"
+        strokeWidth="4">
+    </p-progressSpinner>
+</div>
+<form [formGroup]="form">
+    <div class="card heading">
+        <div class="grid justify-content-center">
+            <div class="col-12 md:col-4 lg:col-4 formgrid">
+                <p-card>
+                    <div class="field grid justify-content-center">
+                        <div class="col-2">
+                            <label for="dropDown">Unos:*</label>
+                        </div>
+                        <div class="col-5">
+                            <p-dropdown id="dropDown" formControlName="dropDown" [options]="options" [showClear]="true" optionLabel="label"
+                                (onChange)="onDropdownValueChange($event)" [style]="{'min-width':'200px'}" placeholder = "Izaberite" class="inputfield"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="field grid justify-content-center">
+                        <div class="col-2">
+                            <label for="dropDown">Tekst:{{ textRequired }}</label>
+                        </div>
+                        <div class="col-5">
+                            <textarea formControlName="text" id="text" [rows]="8" [cols]="23" pInputTextarea 
+                                [autoResize]="false"></textarea>
+                        </div>
+                    </div>
+                    <div *ngIf="uploadVisible()" class="field grid justify-content-center">
+                        <p-fileUpload mode="basic" [disabled]="false" name="file"
+                            chooseIcon="pi pi-upload" tooltipPosition="top" pTooltip="Upload"
+                            [customUpload]="true" #file accept=".txt"
+                            (uploadHandler)="onFileUpload($event)" [auto]="true">
+                        </p-fileUpload>
+                    </div>
+                    <div class="field grid justify-content-center">
+                        <div class="col-2">
+                            <label for="dropDown">Rezultat:</label>
+                        </div>
+                        <div class="col-5">
+                            <p-inputNumber inputId="integeronly" [useGrouping]="false" id="wordCount" formControlName="wordCount">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                    <div *ngIf="izracunajVisible" class="field grid justify-content-center">
+                        <button icon="pi pi-check" class="p-button-success" pRipple pButton type="button" label="Izračunaj"
+                            (click)="onCalculateWordCount()" [disabled]="form.invalid"></button>
+                    </div>
+                </p-card>
+            </div>
+        </div>
+    </div>
+</form>
+<p-toast [style]="{marginTop: '50px'}"></p-toast>
